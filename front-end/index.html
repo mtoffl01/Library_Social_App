@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<link rel="stylesheet" href="stylesheet.css"/>
+	<script src="indexScript.js"></script>
+	<title>Home Page</title>
+</head>
+<body>
+	<div id="sidebar">
+		<div class = "icon"><img src = "assets/icon.jpg" width="230px" height="230px"></div>
+		<div class = "tagline">Tisch Library's Hottest Social Board</div>
+		<div class = "userEntry">
+			<div class = "forms">
+				<form id = "loginForm" action="login.php" method="get">
+					<input type="text" placeholder="Username" name="un" required>
+					<input type="password" placeholder="Password" name="pw" required>
+					<button type="submit">Login</button>
+				</form>
+				<form id = "joinForm" action="join.php" method="post">
+					<input type="text" placeholder="First Name" name="fn" required>
+					<input type ="text" placeholder="Last Name" name="ln" required>
+					<input type="email" placeholder="Email" name="email" required>
+					<input type="password" placeholder="Password" name = "pw" required>
+					<button type="submit">Join</button>
+				</form>
+			</div>
+			<div id = "myButtons">
+				<button onclick="promptLogin()" type="button" id="login">Log-in</button>
+				<button onclick="promptJoin()" type="button" id="join">Join</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
