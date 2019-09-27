@@ -12,16 +12,16 @@
 		<div class = "tagline">Get Connected At Tisch Library</div>
 		<div class = "userEntry">
 			<div class = "forms">
-				<form id = "loginForm" action="login.php" method="get">
+				<form id = "loginForm" action="/login" method="get">
 					<input type="text" placeholder="Username" name="un" required>
 					<input type="password" placeholder="Password" name="pw" required>
 					<button type="submit">Login</button>
 				</form>
-				<form id = "joinForm" action="join.php" method="post">
-					<input type="text" placeholder="First Name" name="fn" required>
-					<input type ="text" placeholder="Last Name" name="ln" required>
+				<form id = "joinForm" action="/join" method="post">
+					<input type="text" placeholder="First Name" name="firstName" required>
+					<input type ="text" placeholder="Last Name" name="lastName" required>
 					<input type="email" placeholder="Email" name="email" required>
-					<input type="password" placeholder="Password" name = "pw" required>
+					<!--<input type="password" placeholder="Password" name = "pw" required>-->
 					<button type="submit">Join</button>
 				</form>
 			</div>

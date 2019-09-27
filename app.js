@@ -1,13 +1,16 @@
 
+//tutorial: https://www.youtube.com/watch?v=L72fhGm1tfE
 //use nodemon for the app starter that listens for changes
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 const path = require('path');
 const logger = require('./middleware/logger');
+var mongoose = require("mongoose", { useUnifiedTopology: true });
+mongoose.Promise = global.Promise;
 
-
-var mongoUri = process.env.MONGODB_URI || 'mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info';
+mongoose.connect('mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info', { useNewUrlParser: true });
 
 //use is a method when we wanna use middleware
 app.use(express.static(path.join(__dirname, 'public'))); //static serves an entire front-end with 
@@ -15,13 +18,32 @@ app.use(express.static(path.join(__dirname, 'public'))); //static serves an enti
 app.use(logger);
 
 //Body parser middleware
-//app.use(bodyParser.json());
 app.use(express.json());
 //for form submissions....
 app.use(express.urlencoded({extended: false})); //when false, can handle url encoded data
 
 //Users api routes
 app.use('/users', require('./routes/users'));
+
+var userSchema = new mongoose.Schema({
+	firstName: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/[a-zA-Z]+/, 'is invalid'], index: true},
+	lastName: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/[a-zA-Z]+/, 'is invalid'], index: true},
+	email: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
+	//status: {type: Boolean, default: true }
+});
+
+var User = mongoose.model("User", userSchema);
+
+app.post('/join', (req, res) => {
+	var myData = new User(req.body);
+	myData.save()
+	.then(item => {
+		res.send("Name saved to database");
+	})
+	.catch(err => {
+		res.status(400).send("Unable to send to DB");
+	});
+});
 
 const PORT = process.env.PORT || 3000;
 
