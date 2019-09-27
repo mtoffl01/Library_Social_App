@@ -5,26 +5,31 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var userRoute = require('./routes/users')
 const path = require('path');
 const logger = require('./middleware/logger');
-var mongoose = require("mongoose", { useUnifiedTopology: true });
-mongoose.Promise = global.Promise;
+// var mongoose = require("mongoose", { useUnifiedTopology: true });
+// mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info', { useNewUrlParser: true });
+app.use(bodyParser.json());
+// mongoose.connect('mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info', { useNewUrlParser: true });
 
 //use is a method when we wanna use middleware
-app.use(express.static(path.join(__dirname, 'public'))); //static serves an entire front-end with 
 //all its local files including js and css files
 app.use(logger);
 
 //Body parser middleware
-app.use(express.json());
+
 //for form submissions....
-app.use(express.urlencoded({extended: false})); //when false, can handle url encoded data
+//app.use(express.urlencoded({extended: false})); //when false, can handle url encoded data
 
-//Users api routes
-app.use('/users', require('./routes/users'));
+//Users api routes - not using right now
+app.use(userRoute);
+app.use(express.static(path.join(__dirname, 'public'))); //static serves an entire front-end with 
 
+
+
+/*USERS section.
 var userSchema = new mongoose.Schema({
 	firstName: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/[a-zA-Z]+/, 'is invalid'], index: true},
 	lastName: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/[a-zA-Z]+/, 'is invalid'], index: true},
@@ -34,7 +39,7 @@ var userSchema = new mongoose.Schema({
 
 var User = mongoose.model("User", userSchema);
 
-app.post('/join', (req, res) => {
+app.post('/users/join', (req, res) => {
 	var myData = new User(req.body);
 	myData.save()
 	.then(item => {
@@ -43,7 +48,7 @@ app.post('/join', (req, res) => {
 	.catch(err => {
 		res.status(400).send("Unable to send to DB");
 	});
-});
+});*/
 
 const PORT = process.env.PORT || 3000;
 

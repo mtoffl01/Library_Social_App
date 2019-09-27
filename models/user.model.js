@@ -1,5 +1,29 @@
-var mongoose = require ('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
+var mongoose = require("mongoose", { useUnifiedTopology: true });
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info', { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true);
+
+var userSchema = new mongoose.Schema({
+  firstName: {type: String, 
+              lowercase: true, 
+              required: [true, "can't be blank"], 
+              match: [/[a-zA-Z]+/, 'is invalid']
+            },
+  lastName: {type: String, 
+              lowercase: true, 
+              required: [true, "can't be blank"], 
+              match: [/[a-zA-Z]+/, 'is invalid']
+            },
+  email: {type: String, 
+          lowercase: true, 
+          required: [true, "can't be blank"], 
+          match: [/\S+@\S+\.\S+/, 'is invalid'],
+          unique: true 
+        },
+});
+
+/*var uniqueValidator = require('mongoose-unique-validator');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var secret = require('../node_modules/config').secret;
@@ -44,9 +68,6 @@ UserSchema.methods.toAuthJSON = function(){
     bio: this.bio,
     image: this.image
   };
-};
+};*/
 
-var User = mongoose.model('User', userSchema);
-exports.User = User;
-
-mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
