@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://mtoffl01:Mikayla1997!@ds127958.mlab.com:27958/user_info', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
+//const db = require("./config/keys").mongoURI;
 
 var userSchema = new mongoose.Schema({
   firstName: {type: String, 
@@ -21,6 +22,9 @@ var userSchema = new mongoose.Schema({
           match: [/\S+@\S+\.\S+/, 'is invalid'],
           unique: true 
         },
+  password: {type:String,
+             required:true
+        }
 });
 
 /*var uniqueValidator = require('mongoose-unique-validator');
